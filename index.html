@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قسم الكيمياء - جامعة آل البيت</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts (Cairo for Body, Tajawal for Headings) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Tajawal:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    
+    <style>
+        /* Custom styles & variables */
+        :root { 
+            --turquoise: #4FD1C5; 
+            --dark-gray-header: #1A202C;
+            --dark-gray-text: #111827; /* gray-900 for high contrast text */
+            --navy: #0c1427;
+            --light-gray-bg: #f9fafb; /* gray-50 */
+            --dark-bg-card: #1e293b; /* slate-800 */
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #ffffff;
+            color: var(--dark-gray-text);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        .dark body { background-color: var(--navy); color: #e5e7eb; }
+        h1, h2, h3, h4 { font-family: 'Tajawal', sans-serif; }
+        html { scroll-behavior: smooth; }
+        
+        .bg-dark-gray { background-color: var(--dark-gray-header); }
+        .text-turquoise { color: var(--turquoise); }
+        .bg-turquoise { background-color: var(--turquoise); }
+        .border-turquoise { border-color: var(--turquoise); }
+        .text-dark-gray { color: var(--dark-gray-text); }
+        .dark .text-dark-gray { color: #f9fafb; }
+
+        /* Unified Card Backgrounds */
+        .card-bg { 
+            background-color: #ffffff; 
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .dark .card-bg { background-color: var(--dark-bg-card); }
+        
+        /* Alternating section backgrounds */
+        .section-bg-alt { background-color: var(--light-gray-bg); }
+        .dark .section-bg-alt { background-color: var(--navy); }
+        .section-bg-main { background-color: #ffffff; }
+        .dark .section-bg-main { background-color: var(--dark-bg-card); }
+
+        /* Modal Styles */
+        .modal { transition: opacity 0.3s ease; }
+        .modal-content { transition: transform 0.3s ease; }
+
+        /* Header scroll effect */
+        #header { transition: background-color 0.4s ease-out, box-shadow 0.4s ease-out; }
+        #header.scrolled {
+            background-color: rgba(26, 32, 44, 0.95);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .dark #header.scrolled { background-color: rgba(12, 20, 39, 0.95); }
+
+        /* Scroll to top button */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            z-index: 100;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+        }
+        html[dir="rtl"] #scrollToTopBtn { left: 20px; }
+        html[dir="ltr"] #scrollToTopBtn { right: 20px; }
+        #scrollToTopBtn:hover { transform: scale(1.1); }
+
+        /* Fade-in animation */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="dark:bg-navy dark:text-gray-200">
+
+    <!-- Header / Navigation Bar -->
+    <header id="header" class="bg-dark-gray/80 dark:bg-dark-gray/80 backdrop-blur-sm text-white sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center p-4">
+            <a href="#hero" class="text-2xl font-bold text-turquoise" data-lang="deptName"></a>
+            <nav class="hidden md:flex items-center space-x-4">
+                <a href="#about" class="hover:text-turquoise transition duration-300" data-lang="navAbout"></a>
+                <a href="#programs" class="hover:text-turquoise transition duration-300" data-lang="navPrograms"></a>
+                <a href="#faculty" class="hover:text-turquoise transition duration-300" data-lang="navFaculty"></a>
+                <a href="#research" class="hover:text-turquoise transition duration-300" data-lang="navResearch"></a>
+                <a href="#opportunities" class="hover:text-turquoise transition duration-300" data-lang="navOpportunities"></a>
+                <a href="#admissions" class="hover:text-turquoise transition duration-300" data-lang="navAdmissions"></a>
+                <a href="#contact" class="hover:text-turquoise transition duration-300" data-lang="navContact"></a>
+                <button id="lang-toggle" class="bg-turquoise/20 text-turquoise border border-turquoise rounded-full px-3 py-1 text-sm font-bold hover:bg-turquoise hover:text-white transition">EN</button>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden p-2"><i class="fas fa-bars text-xl"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800 dark:bg-gray-900">
+             <a href="#about" class="block py-3 px-4 text-sm hover:bg-gray-700 transition" data-lang="navAbout"></a>
+             <a href="#programs" class="block py-3 px-4 text-sm hover:bg-gray-700 transition" data-lang="navPrograms"></a>
+             <a href="#faculty" class="block py-3 px-4 text-sm hover:bg-gray-700 transition" data-lang="navFaculty"></a>
+             <a href="#research" class="block py-3 px-4 text-sm hover:bg-gray-700 transition" data-lang="navResearch"></a>
+             <a href="#opportunities" class="block py-3 px-4 text-sm hover:bg-gray-700 transition" data-lang="navOpportunities"></a>
+             <a href="#admissions" class="block py-3 px-4 text-sm hover:bg-gray-700 transition" data-lang="navAdmissions"></a>
+             <a href="#contact" class="block py-3 px-4 text-sm hover:bg-gray-700 transition" data-lang="navContact"></a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="relative h-screen bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=1920&auto=format&fit=crop');">
+            <div class="absolute inset-0 bg-black opacity-60"></div>
+            <div class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4">
+                <h1 id="hero-title" class="text-5xl md:text-7xl font-extrabold mb-4" style="font-family: 'Tajawal', sans-serif;"></h1>
+                <p id="hero-subtitle" class="text-lg md:text-2xl max-w-3xl mb-8"></p>
+                <div class="space-x-4 space-x-reverse">
+                    <a href="#programs" class="bg-turquoise hover:bg-turquoise-dark text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_15px_rgba(79,209,197,0.6)]" data-lang="heroBtnPrograms"></a>
+                    <a href="#faculty" class="bg-transparent border-2 border-white hover:bg-white hover:text-dark-gray font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105" data-lang="heroBtnFaculty"></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic sections -->
+        <div id="main-content">
+            <section id="about" class="py-20 section-bg-alt fade-in-section"></section>
+            <section id="news" class="py-20 section-bg-main fade-in-section"></section>
+            <section id="programs" class="py-20 section-bg-alt fade-in-section"></section>
+            <section id="faculty" class="py-20 section-bg-main fade-in-section"></section>
+            <section id="research" class="py-20 section-bg-alt fade-in-section"></section>
+            <section id="opportunities" class="py-20 section-bg-main fade-in-section"></section>
+            <section id="admissions" class="py-20 section-bg-alt fade-in-section"></section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-dark-gray text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 text-center md:text-right">
+                <div><h4 class="text-xl font-bold mb-4 text-turquoise" data-lang="deptName"></h4><p class="text-gray-400" data-lang="footerUni"></p></div>
+                <div><h4 class="text-xl font-bold mb-4 text-turquoise" data-lang="footerLinks"></h4><ul class="space-y-2"><li><a href="https://www.aabu.edu.jo" target="_blank" class="text-gray-300 hover:text-turquoise transition" data-lang="footerUniLink"></a></li></ul></div>
+                <div><h4 class="text-xl font-bold mb-4 text-turquoise" data-lang="navContact"></h4><p class="text-gray-300" data-lang="footerAddress"></p><p class="text-gray-300" data-lang="footerPhone"></p><p class="text-gray-300" data-lang="footerEmail"></p></div>
+            </div>
+            <div class="border-t border-gray-700 mt-10 pt-6 text-center text-gray-500">
+                <p data-lang="footerRights"></p>
+                <p class="text-gray-400 text-sm mt-2" id="developer-credit"></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- UI Elements -->
+    <button id="scrollToTopBtn" style="display: none;" class="bg-turquoise text-white w-12 h-12 rounded-full shadow-lg hover:bg-turquoise-dark transition"><i class="fas fa-arrow-up"></i></button>
+    <div id="jobModal" class="modal fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div id="jobModalContent" class="modal-content card-bg rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8 relative transform scale-95">
+            <button id="closeModalBtn" class="absolute top-4 text-gray-500 hover:text-dark-gray dark:hover:text-white transition text-2xl">&times;</button>
+            <h3 id="modalTitle" class="text-3xl font-bold text-dark-gray mb-6"></h3>
+            <div id="modalBody">
+                <h4 class="text-xl font-bold text-turquoise mb-2" data-lang="modalJobDesc"></h4>
+                <p id="modalDescription" class="mb-6"></p>
+                <h4 class="text-xl font-bold text-turquoise mb-2" data-lang="modalSkills"></h4>
+                <ul id="modalSkills" class="list-disc list-inside space-y-1"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const content = {
+            ar: { deptName: "قسم الكيمياء", navAbout: "عن القسم", navPrograms: "البرامج", navFaculty: "هيئة التدريس", navResearch: "الأبحاث", navOpportunities: "فرص العمل", navAdmissions: "القبول", navContact: "اتصل بنا", showMore: "عرض المزيد", showLess: "عرض أقل", heroTitle: "قسم الكيمياء: حيث يبدأ مستقبل العلوم", heroSubtitle: "نلتزم بتقديم تعليم كيميائي رائد، وإعداد جيل من العلماء والمبتكرين.", heroBtnPrograms: "استكشف برامجنا", heroBtnFaculty: "تعرف على هيئتنا", aboutTitle: "عن القسم", newsTitle: "آخر الأخبار والفعاليات", programsTitle: "البرامج الأكاديمية", facultyTitle: "هيئة التدريس", researchTitle: "مجالات الأبحاث الرئيسية", opportunitiesTitle: "فرص العمل لخريجينا", admissionsTitle: "القبول والرسوم الدراسية", newsDate: "أبريل 2025", newsCardTitle: "محاضرة علمية في الكيمياء الخضراء", newsCardDesc: "استضاف القسم محاضرة عن استخدام غاز ثاني أكسيد الكربون في تصنيع بوليمرات صديقة للبيئة.", bachelorTitle: "البكالوريوس في الكيمياء", degree: "الدرجة", hours: "الساعات", bsc: "B.Sc.", numHours: "132", bachelorDesc: "تغطي الخطة مجالات الكيمياء العضوية، غير العضوية، الفيزيائية، والتحليلية.", masterTitle: "الماجستير في الكيمياء", msc: "M.Sc.", path: "المسار", thesis: "رسالة", masterDesc: "برنامج بحثي يتيح التخصص في فروع الكيمياء المتقدمة.", admissionReqs: "شروط القبول لدرجة البكالوريوس", certificate: "الشهادة المطلوبة", certDesc: "الثانوية العامة (الفرع العلمي).", minAvg: "الحد الأدنى للمعدل", tuitionFees: "الرسوم الدراسية (لكل ساعة معتمدة)", program: "البرنامج", jordanian: "الطلبة الأردنيون", international: "الطلبة الدوليون", regular: "البرنامج العادي", parallel: "البرنامج الموازي", jd12: "12 دينار", jd35: "35 دينار", usd75: "$75", clickForDetails: "انقر لرؤية التفاصيل", jobOpportunities: [ { id: 'pharma', icon: 'fa-pills', title: 'الصناعات الدوائية والتجميلية', description: 'العمل في أقسام البحث والتطوير (R&D) لابتكار تركيبات دوائية جديدة، أو في أقسام مراقبة الجودة (QC) لضمان مطابقة المنتجات للمواصفات.', skills: ['معرفة بالكيمياء العضوية والتحليلية', 'دقة عالية ومهارات العمل في المختبر', 'الالتزام بمعايير التصنيع الجيد (GMP)'] }, { id: 'industrial', icon: 'fa-industry', title: 'الصناعات الكيميائية', description: 'الإشراف على عمليات الإنتاج في مصانع الأسمدة، الدهانات، المنظفات، والبتروكيماويات، وتحسين العمليات لزيادة الكفاءة وتقليل التكاليف.', skills: ['فهم قوي للكيمياء الصناعية والهندسة الكيميائية', 'مهارات حل المشكلات', 'القدرة على إدارة المشاريع'] }, { id: 'quality', icon: 'fa-flask-vial', title: 'مختبرات ضبط الجودة', description: 'إجراء فحوصات كيميائية دقيقة للمواد الخام والمنتجات النهائية في مختلف القطاعات (غذائية, صناعية, بيئية) لضمان سلامتها وجودتها.', skills: ['خبرة في استخدام أجهزة التحليل (HPLC, GC)', 'الالتزام بالمعايير الدولية (ISO)', 'مهارات توثيق وكتابة التقارير'] }, { id: 'teaching', icon: 'fa-chalkboard-teacher', title: 'التعليم والتدريس', description: 'تدريس مادة الكيمياء في المدارس الحكومية والخاصة للمراحل الثانوية، أو العمل كمساعد بحث وتدريس في الجامعات.', skills: ['شهادة بكالوريوس كحد أدنى', 'مهارات تواصل ممتازة وشغف بنقل المعرفة', 'قدرة على تبسيط المفاهيم العلمية'] }, { id: 'environment', icon: 'fa-seedling', title: 'البيئة وتحليل المياه', description: 'العمل مع الهيئات الحكومية أو الشركات الاستشارية لمراقبة جودة الهواء والماء والتربة، وتحليل الملوثات، وتطوير حلول للمعالجة.', skills: ['معرفة بالكيمياء البيئية والتحليلية', 'قدرة على العمل الميداني وجمع العينات', 'الإلمام بالتشريعات البيئية'] }, { id: 'research', icon: 'fa-book', title: 'البحث العلمي والتطوير', description: 'الانضمام إلى المراكز البحثية والجامعات للعمل على مشاريع تهدف إلى اكتشاف مواد جديدة أو تطوير تقنيات مبتكرة في مجالات الطاقة والمواد النانوية.', skills: ['درجة الماجستير أو الدكتوراه غالباً مطلوبة', 'فضول علمي ومهارات تحليلية قوية', 'القدرة على نشر الأبحاث العلمية'] } ], modalJobDesc: "الوصف الوظيفي", modalSkills: "المهارات المطلوبة", footerUni: "جامعة آل البيت، كلية العلوم.", footerLinks: "روابط هامة", footerUniLink: "موقع الجامعة الرسمي", footerAddress: "ص.ب: 130040، المفرق 25113، الأردن", footerPhone: "الهاتف: (+962) 2-6297000", footerEmail: "البريد الإلكتروني: info@aabu.edu.jo", footerRights: "© 2025 قسم الكيمياء، جامعة آل البيت. جميع الحقوق محفوظة.", developerCredit: `تم التطوير بحب بواسطة <a href="#" class="text-turquoise hover:underline">أحمد السرحان</a> <i class="fas fa-heart text-turquoise text-xs"></i>` },
+            en: { deptName: "Chemistry Department", navAbout: "About", navPrograms: "Programs", navFaculty: "Faculty", navResearch: "Research", navOpportunities: "Careers", navAdmissions: "Admissions", navContact: "Contact Us", showMore: "Show More", showLess: "Show Less", heroTitle: "Chemistry: Where the Future of Science Begins", heroSubtitle: "Committed to providing leading chemistry education and preparing a generation of scientists and innovators.", heroBtnPrograms: "Explore Programs", heroBtnFaculty: "Meet Our Faculty", aboutTitle: "About Us", newsTitle: "Latest News & Events", programsTitle: "Academic Programs", facultyTitle: "Our Faculty", researchTitle: "Main Research Areas", opportunitiesTitle: "Career Opportunities", admissionsTitle: "Admissions & Fees", newsDate: "April 2025", newsCardTitle: "Scientific Lecture on Green Chemistry", newsCardDesc: "The department hosted a lecture on using CO2 to produce environmentally friendly polymers.", bachelorTitle: "Bachelor's in Chemistry", degree: "Degree", hours: "Hours", bsc: "B.Sc.", numHours: "132", bachelorDesc: "The plan covers organic, inorganic, physical, and analytical chemistry fields.", masterTitle: "Master's in Chemistry", msc: "M.Sc.", path: "Track", thesis: "Thesis", masterDesc: "A research-based program for specialization in advanced chemistry branches.", admissionReqs: "Bachelor's Admission Requirements", certificate: "Required Certificate", certDesc: "General Secondary Education (Scientific Stream).", minAvg: "Minimum Average", tuitionFees: "Tuition Fees (per credit hour)", program: "Program", jordanian: "Jordanians", international: "Internationals", regular: "Regular Program", parallel: "Parallel Program", jd12: "12 JD", jd35: "35 JD", usd75: "$75", clickForDetails: "Click for details", jobOpportunities: [ { id: 'pharma', icon: 'fa-pills', title: 'Pharmaceutical & Cosmetics Industries', description: 'Work in R&D to innovate new drug formulations or in QC to ensure products meet specifications.', skills: ['Knowledge of organic and analytical chemistry', 'High precision and lab skills', 'Adherence to Good Manufacturing Practices (GMP)'] }, { id: 'industrial', icon: 'fa-industry', title: 'Chemical Industries', description: 'Supervise production in fertilizers, paints, detergents, and petrochemicals plants, optimizing processes for efficiency.', skills: ['Strong understanding of industrial and engineering chemistry', 'Problem-solving skills', 'Project management capabilities'] }, { id: 'quality', icon: 'fa-flask-vial', title: 'Quality Control Labs', description: 'Perform precise chemical tests on raw materials and final products in various sectors (food, industrial, environmental) to ensure safety and quality.', skills: ['Experience with analytical instruments (HPLC, GC)', 'Adherence to international standards (ISO)', 'Documentation and report writing skills'] }, { id: 'teaching', icon: 'fa-chalkboard-teacher', title: 'Education & Teaching', description: 'Teach chemistry in public or private high schools, or work as a research and teaching assistant at universities.', skills: ['Bachelor\'s degree minimum', 'Excellent communication skills and passion for teaching', 'Ability to simplify scientific concepts'] }, { id: 'environment', icon: 'fa-seedling', title: 'Environment & Water Analysis', description: 'Work with government agencies or consulting firms to monitor air, water, and soil quality, analyze pollutants, and develop treatment solutions.', skills: ['Knowledge of environmental and analytical chemistry', 'Fieldwork and sample collection abilities', 'Familiarity with environmental legislation'] }, { id: 'research', icon: 'fa-book', title: 'Scientific Research & Development', description: 'Join research centers and universities to work on projects aiming to discover new materials or develop innovative technologies in energy and nanomaterials.', skills: ['Master\'s or PhD degree often required', 'Scientific curiosity and strong analytical skills', 'Ability to publish scientific research'] } ], modalJobDesc: "Job Description", modalSkills: "Required Skills", footerUni: "Al al-Bayt University, Faculty of Science.", footerLinks: "Important Links", footerUniLink: "Official University Website", footerAddress: "P.O. Box 130040, Mafraq 25113, Jordan", footerPhone: "Phone: (+962) 2-6297000", footerEmail: "Email: info@aabu.edu.jo", footerRights: "© 2025 Chemistry Department, Al al-Bayt University. All rights reserved.", developerCredit: `Developed with <i class="fas fa-heart text-turquoise text-xs"></i> by <a href="#" class="text-turquoise hover:underline">Ahmad Al-Sarhan</a>` }
+        };
+        const facultyData = {
+            ar: [ { name: "أ.د. رائد محمد إبراهيم بنات", title: "عميد الكلية", rank: "أستاذ" }, { name: "أ.د. رشا خالد محمد أبو فلاحه", title: "نائب العميد", rank: "أستاذ مشارك" }, { name: "د. آيات الله تركي المساعدة", title: "رئيس القسم", rank: "أستاذ" }, { name: "د. أحمد قبّلان فهد الشرعة", title: "رئيس القسم", rank: "أستاذ مساعد" }, { name: "أ.د. رائد أحمد إسماعيل غانم", title: "أستاذ الكيمياء", rank: "أستاذ" }, { name: "أ.د. هتّاف مصطفى إبراهيم بكر", title: "أستاذ الكيمياء", rank: "أستاذ" }, { name: "أ.د. ياسين سالم السعود", title: "أستاذ الكيمياء", rank: "أستاذ" }, { name: "أ.د. خلدون عبد الخالق السعود", title: "أستاذ الكيمياء", rank: "أستاذ" }, { name: "أ.د. باسم فارس عبد الرحيم علي", title: "أستاذ الكيمياء", rank: "أستاذ" }, { name: "أ.د. محمود حسين الرفاعي", title: "أستاذ الكيمياء", rank: "أستاذ" }, { name: "أ.د. محمد محمود فارس إبراهيم", title: "أستاذ الكيمياء", rank: "أستاذ" }, { name: "أ.د. حربي طعمة المصري", title: "أستاذ الكيمياء", rank: "أستاذ" }, { name: "أ.د. هيثم حسين السعدوني", title: "أستاذ مشارك", rank: "أستاذ مشارك" }, { name: "أ.د. قتيبة سلطان أبو سالم", title: "أستاذ مشارك", rank: "أستاذ مشارك" }, { name: "د. مهند حسين مسعد", title: "أستاذ مساعد", rank: "أستاذ مساعد" }, { name: "د. أروى القرعان", title: "مدرّس", rank: "مدرس" }],
+            en: [ { name: "Prof. Raed M. Banat", title: "Dean", rank: "Professor" }, { name: "Prof. Rasha K. Abu Falaha", title: "Vice Dean", rank: "Assoc. Prof." }, { name: "Dr. Ayatollah T. Al-Masa'deh", title: "Dept. Head", rank: "Professor" }, { name: "Dr. Ahmed Q. Al-Shara'a", title: "Dept. Head", rank: "Assist. Prof." }, { name: "Prof. Raed A. Ghanem", title: "Professor of Chemistry", rank: "Professor" }, { name: "Prof. Hattaf M. Bakr", title: "Professor of Chemistry", rank: "Professor" }, { name: "Prof. Yaseen S. Al-Saoud", title: "Professor of Chemistry", rank: "Professor" }, { name: "Prof. Khaldoun A. Al-Saoud", title: "Professor of Chemistry", rank: "Professor" }, { name: "Prof. Basem F. Ali", title: "Professor of Chemistry", rank: "Professor" }, { name: "Prof. Mahmoud H. Al-Rifai", title: "Professor of Chemistry", rank: "Professor" }, { name: "Prof. Mohammed M. Ibrahim", title: "Professor of Chemistry", rank: "Professor" }, { name: "Prof. Harbi T. Al-Masri", title: "Professor of Chemistry", rank: "Professor" }, { name: "Prof. Haitham H. Al-Saadouni", title: "Assoc. Professor", rank: "Assoc. Prof." }, { name: "Prof. Qutaiba S. Abu Salem", title: "Assoc. Professor", rank: "Assoc. Prof." }, { name: "Dr. Muhannad H. Masadeh", title: "Assist. Professor", rank: "Assist. Prof." }, { name: "Dr. Arwa Al-Qaraan", title: "Lecturer", rank: "Lecturer" }]
+        };
+
+        let currentLang = 'ar';
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            closeModalBtn.classList.toggle('left-4', lang === 'ar');
+            closeModalBtn.classList.toggle('right-4', lang === 'en');
+            const c = content[lang];
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                if(c[el.dataset.lang]) el.textContent = c[el.dataset.lang];
+            });
+            document.getElementById('hero-title').textContent = c.heroTitle;
+            document.getElementById('hero-subtitle').textContent = c.heroSubtitle;
+            document.getElementById('developer-credit').innerHTML = c.developerCredit;
+            document.getElementById('lang-toggle').textContent = lang === 'ar' ? 'EN' : 'ع';
+            populateSections(lang);
+        }
+        
+        function populateSections(lang) {
+            const c = content[lang];
+            document.getElementById('about').innerHTML = `<div class="container mx-auto px-6"><h2 class="text-4xl font-bold text-center text-dark-gray mb-12">${c.aboutTitle}</h2><div class="max-w-4xl mx-auto text-center"><p class="text-lg leading-relaxed text-gray-700 dark:text-gray-300">${c.heroSubtitle}</p></div></div>`;
+            document.getElementById('news').innerHTML = `<div class="container mx-auto px-6"><h2 class="text-4xl font-bold text-center text-dark-gray mb-12">${c.newsTitle}</h2><div class="card-bg max-w-lg mx-auto rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"><div class="p-8 bg-green-50 dark:bg-green-500/10 flex justify-center items-center"><svg class="w-28 h-28" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 8H50L46 56H18L14 8Z" class="stroke-gray-400 dark:stroke-gray-500" stroke-width="2"></path><path d="M20 16H44" class="stroke-gray-400 dark:stroke-gray-500" stroke-width="2"></path><path d="M32 50C41.9411 40.0589 42 28 32 24C22 28 22.0589 40.0589 32 50Z" class="fill-green-400 dark:fill-green-500/80"></path><path d="M32 36C34.5 34 36 31 32 24" class="stroke-white/50 dark:stroke-white/30" stroke-width="1.5"></path></svg></div><div class="p-6"><p class="text-sm text-gray-500 dark:text-gray-400">${c.newsDate}</p><h3 class="text-2xl font-bold text-dark-gray mt-2 mb-4">${c.newsCardTitle}</h3><p class="text-gray-700 dark:text-gray-300">${c.newsCardDesc}</p></div></div></div>`;
+            document.getElementById('programs').innerHTML = `<div class="container mx-auto px-6"><h2 class="text-4xl font-bold text-center text-dark-gray mb-12">${c.programsTitle}</h2><div class="grid md:grid-cols-2 gap-10"><div class="card-bg rounded-lg shadow-xl p-8 transform hover:-translate-y-2 transition-all duration-300 flex flex-col"><h3 class="text-3xl font-bold text-turquoise mb-4">${c.bachelorTitle}</h3><p class="font-semibold text-gray-800 dark:text-gray-200"><strong>${c.degree}:</strong> ${c.bsc}</p><p class="font-semibold text-gray-800 dark:text-gray-200"><strong>${c.hours}:</strong> ${c.numHours}</p><p class="text-gray-700 dark:text-gray-300 mt-4 flex-grow">${c.bachelorDesc}</p></div><div class="card-bg rounded-lg shadow-xl p-8 transform hover:-translate-y-2 transition-all duration-300 flex flex-col"><h3 class="text-3xl font-bold text-turquoise mb-4">${c.masterTitle}</h3><p class="font-semibold text-gray-800 dark:text-gray-200"><strong>${c.degree}:</strong> ${c.msc}</p><p class="font-semibold text-gray-800 dark:text-gray-200"><strong>${c.path}:</strong> ${c.thesis}</p><p class="text-gray-700 dark:text-gray-300 mt-4 flex-grow">${c.masterDesc}</p></div></div></div>`;
+            
+            const facultyContainer = document.getElementById('faculty');
+            facultyContainer.innerHTML = `<div class="container mx-auto px-6"><h2 class="text-4xl font-bold text-center text-dark-gray mb-12">${c.facultyTitle}</h2><div id="faculty-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"></div><div class="text-center mt-10"><button id="faculty-toggle-btn" data-expanded="false" class="bg-turquoise text-white font-bold py-2 px-6 rounded-lg hover:bg-turquoise-dark transition">${c.showMore}</button></div></div>`;
+            const facultyGrid = document.getElementById('faculty-grid');
+            const currentFacultyData = facultyData[lang];
+            facultyGrid.innerHTML = '';
+            currentFacultyData.forEach((member, index) => {
+                const card = document.createElement('div');
+                card.className = `faculty-card bg-gray-50 dark:bg-slate-800 text-center p-6 rounded-lg shadow-md hover:shadow-2xl hover:border-turquoise border-2 border-transparent transition-all duration-300 transform hover:-translate-y-1`;
+                if (index >= 8) card.classList.add('hidden');
+                card.innerHTML = `<div class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-turquoise p-1 bg-gray-200 dark:bg-slate-700 flex items-center justify-center"><svg class="w-full h-full text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><h4 class="text-lg font-bold text-dark-gray">${member.name}</h4><p class="text-turquoise font-semibold">${member.rank}</p><p class="text-gray-600 dark:text-gray-400">${member.title}</p>`;
+                facultyGrid.appendChild(card);
+            });
+            document.getElementById('faculty-toggle-btn').style.display = currentFacultyData.length > 8 ? 'inline-block' : 'none';
+
+            const opportunitiesContainer = document.getElementById('opportunities');
+            opportunitiesContainer.innerHTML = `<div class="container mx-auto px-6"><h2 class="text-4xl font-bold text-center text-dark-gray mb-12">${c.opportunitiesTitle}</h2><div id="opportunities-grid" class="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div></div>`;
+            const opportunitiesGrid = document.getElementById('opportunities-grid');
+            c.jobOpportunities.forEach(job => { opportunitiesGrid.innerHTML += `<button data-job-id="${job.id}" class="job-card group card-bg p-6 rounded-lg shadow-lg hover:shadow-xl dark:hover:shadow-turquoise/20 hover:-translate-y-1 transition-all duration-300 text-right"><div class="flex items-center gap-4"><div class="text-turquoise text-4xl"><i class="fas ${job.icon}"></i></div><div class="text-start"><h4 class="text-xl font-bold text-dark-gray">${job.title}</h4><p class="text-sm text-gray-500 dark:text-gray-400">${c.clickForDetails}</p></div></div></button>`; });
+            addJobCardListeners();
+            document.getElementById('admissions').innerHTML = `<div class="container mx-auto px-6"><h2 class="text-4xl font-bold text-center text-dark-gray mb-12">${c.admissionsTitle}</h2><div class="max-w-4xl mx-auto"><div class="card-bg rounded-lg shadow-md p-8 mb-8"><h3 class="text-2xl font-bold text-dark-gray mb-4">${c.admissionReqs}</h3><div class="flex items-center gap-4"><i class="fas fa-graduation-cap text-3xl text-turquoise"></i><p><strong>${c.certificate}</strong> ${c.certDesc}</p></div><div class="flex items-center gap-4 mt-4"><i class="fas fa-star text-3xl text-turquoise"></i><p><strong>${c.minAvg}:</strong> <span class="text-turquoise font-bold text-xl">65%</span></p></div></div><h3 class="text-2xl font-bold text-dark-gray mb-4 text-center">${c.tuitionFees}</h3><div class="overflow-x-auto shadow-md rounded-lg"><table class="min-w-full card-bg text-center"><thead class="bg-dark-gray text-white"><tr><th>${c.program}</th><th>${c.jordanian}</th><th>${c.international}</th></tr></thead><tbody><tr class="border-b dark:border-slate-700"><td>${c.regular}</td><td>${c.jd12}</td><td>-</td></tr><tr><td>${c.parallel}</td><td>${c.jd35}</td><td>${c.usd75}</td></tr></tbody></table></div></div></div>`;
+        }
+
+        function addJobCardListeners() {
+            const jobModal = document.getElementById('jobModal');
+            const jobModalContent = document.getElementById('jobModalContent');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            document.querySelectorAll('.job-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const jobData = content[currentLang].jobOpportunities.find(j => j.id === card.dataset.jobId);
+                    if (jobData) {
+                        document.getElementById('modalTitle').textContent = jobData.title;
+                        document.getElementById('modalDescription').textContent = jobData.description;
+                        const skillsList = document.getElementById('modalSkills');
+                        skillsList.innerHTML = '';
+                        jobData.skills.forEach(skill => skillsList.innerHTML += `<li>${skill}</li>`);
+                        jobModal.classList.remove('hidden');
+                        setTimeout(() => { jobModal.classList.remove('opacity-0'); jobModalContent.classList.remove('scale-95'); }, 10);
+                    }
+                });
+            });
+            const closeModal = () => { jobModal.classList.add('opacity-0'); jobModalContent.classList.add('scale-95'); setTimeout(() => jobModal.classList.add('hidden'), 300); };
+            closeModalBtn.addEventListener('click', closeModal);
+            jobModal.addEventListener('click', e => { if (e.target === jobModal) closeModal(); });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const langToggle = document.getElementById('lang-toggle');
+            
+            // Initial load
+            switchLanguage('ar');
+
+            langToggle.addEventListener('click', () => switchLanguage(currentLang === 'ar' ? 'en' : 'ar'));
+            document.getElementById('mobile-menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
+            document.getElementById('scrollToTopBtn').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+            
+            const header = document.getElementById('header');
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            window.onscroll = () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+                scrollToTopBtn.style.display = (window.scrollY > 100) ? 'block' : 'none';
+            };
+
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver(entries => { entries.forEach(entry => entry.target.classList.toggle('is-visible', entry.isIntersecting)); }, { threshold: 0.1 });
+            sections.forEach(section => observer.observe(section));
+
+            document.body.addEventListener('click', (e) => {
+                if (e.target.id === 'faculty-toggle-btn') {
+                    const btn = e.target;
+                    const isExpanded = btn.dataset.expanded === 'true';
+                    document.querySelectorAll('.faculty-card').forEach((card, index) => {
+                        if (index >= 8) card.classList.toggle('hidden', isExpanded);
+                    });
+                    btn.dataset.expanded = !isExpanded;
+                    btn.textContent = !isExpanded ? content[currentLang].showLess : content[currentLang].showMore;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

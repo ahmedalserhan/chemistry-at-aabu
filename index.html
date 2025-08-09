@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="قسم الكيمياء بجامعة آل البيت - معلومات عن البرامج وأعضاء هيئة التدريس والبحث والفرص المتاحة.">
     <title>قسم الكيمياء - جامعة آل البيت</title>
     
     <!-- Tailwind CSS CDN -->
@@ -103,8 +104,13 @@
                 <a href="#admissions" class="hover:text-turquoise transition duration-300" data-lang="navAdmissions"></a>
                 <a href="#contact" class="hover:text-turquoise transition duration-300" data-lang="navContact"></a>
                 <button id="lang-toggle" class="bg-turquoise/20 text-turquoise border border-turquoise rounded-full px-3 py-1 text-sm font-bold hover:bg-turquoise hover:text-white transition">EN</button>
+                <button id="theme-toggle" class="bg-turquoise/20 text-turquoise border border-turquoise rounded-full p-2 hover:bg-turquoise hover:text-white transition"><i class="fas fa-sun"></i></button>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden p-2"><i class="fas fa-bars text-xl"></i></button>
+            <div class="flex items-center space-x-2">
+                <button id="lang-toggle-mobile" class="md:hidden bg-turquoise/20 text-turquoise border border-turquoise rounded-full p-2 text-sm font-bold hover:bg-turquoise hover:text-white transition">EN</button>
+                <button id="theme-toggle-mobile" class="md:hidden bg-turquoise/20 text-turquoise border border-turquoise rounded-full p-2 hover:bg-turquoise hover:text-white transition"><i class="fas fa-sun"></i></button>
+                <button id="mobile-menu-button" class="md:hidden p-2"><i class="fas fa-bars text-xl"></i></button>
+            </div>
         </div>
         <div id="mobile-menu" class="hidden md:hidden bg-gray-800 dark:bg-gray-900">
              <a href="#about" class="block py-3 px-4 text-sm hover:bg-gray-700 transition" data-lang="navAbout"></a>
@@ -200,6 +206,8 @@
             document.getElementById('hero-subtitle').textContent = c.heroSubtitle;
             document.getElementById('developer-credit').innerHTML = c.developerCredit;
             document.getElementById('lang-toggle').textContent = lang === 'ar' ? 'EN' : 'ع';
+            const langMobile = document.getElementById('lang-toggle-mobile');
+            if (langMobile) langMobile.textContent = lang === 'ar' ? 'EN' : 'ع';
             populateSections(lang);
         }
         
@@ -254,13 +262,45 @@
             jobModal.addEventListener('click', e => { if (e.target === jobModal) closeModal(); });
         }
 
+        function setTheme(theme) {
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            localStorage.setItem('theme', theme);
+            updateThemeButtons();
+        }
+
+        function toggleTheme() {
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            setTheme(newTheme);
+        }
+
+        function updateThemeButtons() {
+            const icon = document.documentElement.classList.contains('dark') ? 'fa-sun' : 'fa-moon';
+            document.querySelectorAll('#theme-toggle, #theme-toggle-mobile').forEach(btn => {
+                if (btn) btn.innerHTML = `<i class="fas ${icon}"></i>`;
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const langToggle = document.getElementById('lang-toggle');
-            
+            const langToggleMobile = document.getElementById('lang-toggle-mobile');
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+
             // Initial load
             switchLanguage('ar');
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme) {
+                setTheme(storedTheme);
+            } else {
+                updateThemeButtons();
+            }
 
-            langToggle.addEventListener('click', () => switchLanguage(currentLang === 'ar' ? 'en' : 'ar'));
+            [langToggle, langToggleMobile].forEach(btn => {
+                if (btn) btn.addEventListener('click', () => switchLanguage(currentLang === 'ar' ? 'en' : 'ar'));
+            });
+            [themeToggle, themeToggleMobile].forEach(btn => {
+                if (btn) btn.addEventListener('click', toggleTheme);
+            });
             document.getElementById('mobile-menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
             document.getElementById('scrollToTopBtn').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
             
